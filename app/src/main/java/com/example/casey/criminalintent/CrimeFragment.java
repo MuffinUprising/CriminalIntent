@@ -51,7 +51,7 @@ public class CrimeFragment extends Fragment{
         //append arguments with unique ID
         UUID crimeId = (UUID)getArguments().getSerializable(EXTRA_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
     }
 
     private void updateDate() {
@@ -62,9 +62,12 @@ public class CrimeFragment extends Fragment{
     @TargetApi(11)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        // new View for the fragment - from what I understand, this 'inflates' the fragment onto the UI
-        // similar to a panel in a frame in Java
+
         View v = inflater.inflate(R.layout.fragment_crime, parent, false);
+
+        // instantiate EditText title field, link to crime_title id
+        mTitleField = (EditText)v.findViewById(R.id.crimte_title);
+        mTitleField.setText(mCrime.getTitle());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             if(NavUtils.getParentActivityName(getActivity()) != null) {
@@ -72,9 +75,6 @@ public class CrimeFragment extends Fragment{
             }
         }
 
-        // instantiate EditText title field, link to crime_title id
-        mTitleField = (EditText)v.findViewById(R.id.crimte_title);
-        mTitleField.setText(mCrime.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence c, int start, int count, int after) {
